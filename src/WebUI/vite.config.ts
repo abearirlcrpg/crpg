@@ -13,6 +13,7 @@ import Visualizer from 'rollup-plugin-visualizer';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import viteCompression from 'vite-plugin-compression';
 import topLevelAwait from 'vite-plugin-top-level-await';
+import ReactivityTransform from '@vue-macros/reactivity-transform/vite';
 import json5 from 'json5';
 
 // TODO: to libs
@@ -58,24 +59,24 @@ export default defineConfig({
   },
 
   plugins: [
-    // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
-    Layouts(),
-
     // https://github.com/posva/unplugin-vue-router
     VueRouter({
       extensions: ['.vue'],
       exclude: ['**/*.spec*'],
       dts: 'src/types/typed-router.d.ts',
-      routeBlockLang: 'yaml',
       getRouteName: getPascalCaseRouteName,
     }),
 
     Vue({
-      reactivityTransform: true,
       script: {
         defineModel: true,
       },
     }),
+
+    ReactivityTransform(),
+
+    // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
+    Layouts(),
 
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
