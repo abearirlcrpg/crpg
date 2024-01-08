@@ -17,6 +17,7 @@ public record SettlementPublicViewModel : IMapFrom<Settlement>
     public Point Position { get; init; } = default!;
     public Culture Culture { get; init; }
     public Region Region { get; init; }
+    public int Troops { get; init; }
     public UserPublicViewModel? Owner { get; init; } // recursion TODO: clan color
     public void Mapping(Profile profile)
     {
