@@ -27,6 +27,8 @@ definePage({
   },
 });
 
+const router = useRouter();
+
 const mainHeaderHeight = useMainHeaderHeight();
 
 // prettier-ignore
@@ -57,7 +59,34 @@ const {
   partySpawn,
   moveParty,
   visibleParties,
+
+  //
+  toggleRecruitTroops,
+  isTogglingRecruitTroops
 } = useParty();
+
+// TODO: need refactoring
+// TODO: tweak routes nesting
+// enter/leave settlement
+
+// TODO: to route middleware? no
+watchEffect(() => {
+  if (party.value === null) return;
+
+  // if (party.value.targetedSettlement !== null && inSettlementStatuses.has(party.value.status)) {
+  //   router.push({
+  //     name: 'StrategusSettlementId', // TODO: tweak routes nesting
+  //     params: { id: party.value.targetedSettlement.id },
+  //   });
+  // }
+  // else {
+  //   //
+  //   // await moveParty
+  //   router.push({
+  //     name: 'StrategusParent',
+  //   });
+  // }
+});
 
 const {
   settlements,
@@ -147,7 +176,7 @@ const onMapReady = async (map: Map) => {
 </script>
 
 <template>
-  <div :style="{ height: `calc(100vh - ${mainHeaderHeight}px)` }">
+  <div class="relative overflow-hidden" :style="{ height: `calc(100vh - ${mainHeaderHeight}px)` }">
     <OLoading v-if="mapIsLoading" fullPage active iconSize="xl" />
 
     <LMap
@@ -213,15 +242,16 @@ const onMapReady = async (map: Map) => {
       <SettlementSearch v-if="shownSearch" :settlements="settlements" @select="flyToSettlement" />
 
       <DialogRegistration v-if="!isRegistered" @registered="onRegistered" />
-
-      <DialogSettlement
-        v-if="
-          party !== null &&
-          party.targetedSettlement !== null &&
-          inSettlementStatuses.has(party.status)
-        "
-      />
     </div>
+
+    <RouterView v-slot="{ Component }" class="absolute left-16 top-6 z-[1000]">
+      <Suspense>
+        <component :is="Component" />
+        <template #fallback>
+          <OLoading fullPage active iconSize="xl" />
+        </template>
+      </Suspense>
+    </RouterView>
   </div>
 </template>
 

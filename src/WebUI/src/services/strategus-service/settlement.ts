@@ -60,11 +60,8 @@ export const getSettlements = async () => {
   });
 };
 
-//
-//
-//
-//
-// TODO: Spec
+export const getSettlement = (id: number) => get<SettlementPublic>(`/settlements/${id}`);
+
 export const getSettlementGarrisonItems = (id: number) =>
   get<SettlementItem[]>(`/settlements/${id}/items`);
 

@@ -24,7 +24,7 @@ const { HHPollId, HHEvent, HHEventRemaining, isHHCountdownEnded } = useHappyHour
 
 const { gameServerStats, loadGameServerStats } = useGameServerStats();
 
-const promises: Array<Promise<any>> = [loadGameServerStats(), loadJoinRestriction()];
+const promises: Array<Promise<any>> = [loadJoinRestriction()];
 
 if (userStore.clan === null) {
   promises.push(userStore.getUserClanAndRole());
@@ -52,7 +52,10 @@ await Promise.all(promises);
 </script>
 
 <template>
-  <div class="relative flex min-h-[calc(100vh+1px)] flex-col">
+  <div
+    class="relative flex flex-col"
+    :class="route.meta.fullPage ? 'min-h-screen' : 'min-h-[calc(100vh+1px)]'"
+  >
     <Bg v-if="route.meta?.bg" :bg="route.meta.bg" />
 
     <header
