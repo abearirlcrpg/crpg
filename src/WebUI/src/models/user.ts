@@ -22,7 +22,7 @@ export interface User {
 export interface UserPublic
   extends Pick<User, 'id' | 'platform' | 'platformUserId' | 'name' | 'region'> {
   avatar: string;
-  clan: Clan | null;
+  clan: Clan | null; // TODO: generic fo clan
 }
 
 // TODO: to /models/item.ts
