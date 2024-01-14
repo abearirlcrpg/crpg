@@ -6,7 +6,13 @@ const settlement = injectStrict(settlementKey);
 
 <template>
   <div>
-    <!-- TODO: -->
+    <div class="prose prose-invert">
+      <div>TODO: Settlement town center</div>
+      <ul>
+        <li>--</li>
+        <li>--</li>
+      </ul>
+    </div>
     <!-- <OButton
           variant="primary"
           size="lg"
@@ -19,7 +25,5 @@ const settlement = injectStrict(settlementKey);
           :disabled="isTogglingRecruitTroops"
           @click="$emit('toggleRecruitTroops')"
         /> -->
-
-    <pre>{{ settlement }}</pre>
   </div>
 </template>

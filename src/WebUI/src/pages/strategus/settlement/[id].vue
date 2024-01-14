@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { getSettlement } from '@/services/strategus-service/settlement';
-import { settlementIconByType } from '@/services/strategus-service/settlement';
-import { itemCultureToIcon } from '@/services/item-service'; // TODO: cultrue service
 import { settlementKey } from '@/symbols/strategus/settlement';
 
 definePage({
@@ -30,78 +28,78 @@ await loadSettlement();
 
 <template>
   <div
-    class="flex max-h-[95%] w-1/2 flex-col space-y-8 overflow-hidden rounded-3xl border border-solid border-border-200 bg-base-100 p-6 text-content-200"
+    class="flex h-[95%] w-2/5 flex-col space-y-4 overflow-hidden rounded-3xl bg-base-100 bg-opacity-90 p-6 text-content-200 backdrop-blur-sm"
   >
-    <div class="flex items-center gap-5 border-b border-border-200 pb-2">
+    <header class="border-b border-border-200 pb-2">
       <!-- TODO: leave from city logic, API -->
       <!-- Exit gate/door icon -->
-      <OButton
-        v-tooltip.bottom="`Leave`"
-        tag="router-link"
-        :to="{ name: 'Strategus' }"
-        variant="secondary"
-        size="lg"
-        outlined
-        rounded
-        icon-left="arrow-left"
-      />
 
-      <div class="flex items-center gap-2.5">
-        <OIcon
-          :icon="settlementIconByType[settlement!.type].icon"
-          size="2xl"
-          class="self-baseline"
+      <div class="flex items-center gap-5">
+        <OButton
+          v-tooltip.bottom="`Leave`"
+          tag="router-link"
+          :to="{ name: 'Strategus' }"
+          variant="secondary"
+          size="lg"
+          outlined
+          rounded
+          icon-left="arrow-left"
         />
-        <div class="flex flex-col gap-1">
-          <div class="flex items-center gap-2">
-            <div class="text-lg">{{ settlement!.name }}</div>
-            <div class="flex items-center gap-1.5">
-              <SvgSpriteImg
-                :name="itemCultureToIcon[settlement!.culture]"
-                viewBox="0 0 48 48"
-                class="w-4"
-              />
-              <div class="text-2xs text-content-300">
-                {{ $t(`strategus.settlementType.${settlement!.type}`) }}
-              </div>
-            </div>
+
+        <div class="flex items-center gap-5">
+          <SettlementMedia :settlement="settlement!" />
+
+          <Divider inline />
+
+          <div class="flex items-center gap-1.5" v-tooltip.bottom="`Troops`">
+            <OIcon icon="member" size="lg" />
+            {{ settlement!.troops }}
           </div>
 
-          <div class="flex items-center gap-1.5">
-            <div v-if="settlement?.owner">
-              <UserMedia :user="settlement.owner" class="max-w-[12rem]" />
-            </div>
+          <Divider inline />
+
+          <!-- TODO: gold? -->
+          <Coin :value="10000" />
+
+          <Divider inline />
+
+          <div v-if="settlement?.owner" class="flex flex-col gap-1">
+            <span class="text-3xs text-content-300">Owner</span>
+            <UserMedia :user="settlement.owner" class="max-w-[12rem]" />
           </div>
         </div>
       </div>
+    </header>
 
-      <div class="flex items-center gap-2">
-        <RouterLink
-          :to="{ name: 'StrategusSettlementId', params: { id: route.params.id } }"
-          v-slot="{ isExactActive }"
-        >
-          <OButton
-            :variant="isExactActive ? 'transparent-active' : 'transparent'"
-            size="lg"
-            :label="`Info`"
-          />
-        </RouterLink>
+    <nav class="flex items-center justify-center gap-2">
+      <RouterLink
+        :to="{ name: 'StrategusSettlementId', params: { id: route.params.id } }"
+        v-slot="{ isExactActive }"
+      >
+        <OButton
+          :variant="isExactActive ? 'transparent-active' : 'secondary'"
+          size="sm"
+          :label="`Info`"
+        />
+      </RouterLink>
 
-        <RouterLink
-          :to="{ name: 'StrategusSettlementIdGarrison', params: { id: route.params.id } }"
-          v-slot="{ isExactActive }"
-        >
-          <OButton
-            :variant="isExactActive ? 'transparent-active' : 'transparent'"
-            size="lg"
-            :label="`Garrison`"
-          />
-        </RouterLink>
-      </div>
-    </div>
+      <RouterLink
+        :to="{ name: 'StrategusSettlementIdGarrison', params: { id: route.params.id } }"
+        v-slot="{ isExactActive }"
+      >
+        <OButton
+          :variant="isExactActive ? 'transparent-active' : 'secondary'"
+          size="sm"
+          iconLeft="member"
+          :label="`Garrison`"
+        />
+      </RouterLink>
+    </nav>
 
     <div class="h-full overflow-y-auto overflow-x-hidden">
       <RouterView />
     </div>
+
+    <footer class="flex items-center gap-5 border-t border-border-200 pt-2">TODO:</footer>
   </div>
 </template>

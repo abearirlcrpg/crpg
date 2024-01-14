@@ -203,7 +203,7 @@ const onMapReady = async (map: Map) => {
       <!-- TODO: policy -->
       <ControlTerrainEditToggle position="topleft" @click="toggleEditMode" />
 
-      <ControlMousePosition />
+      <ControlMousePosition position="bottomright" />
       <ControlLocateParty v-if="party !== null" :party="party" position="bottomleft" />
 
       <LayerTerrain v-if="terrainVisibility" :data="terrain" @edit="onTerrainUpdated" />
@@ -244,9 +244,13 @@ const onMapReady = async (map: Map) => {
       <DialogRegistration v-if="!isRegistered" @registered="onRegistered" />
     </div>
 
+    <PartyProfile v-if="party" class="absolute right-10 top-12 z-[1000]" :party="party" />
+
     <RouterView v-slot="{ Component }" class="absolute left-16 top-6 z-[1000]">
       <Suspense>
-        <component :is="Component" />
+        <div>
+          <component :is="Component" />
+        </div>
         <template #fallback>
           <OLoading fullPage active iconSize="xl" />
         </template>
@@ -307,5 +311,48 @@ const onMapReady = async (map: Map) => {
 
 .marker-cluster-large div {
   @apply bg-primary-hover text-content-100;
+}
+
+/* Popup */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  @apply border-transparent !bg-base-100/80 !text-content-100 !shadow-none;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  @apply !text-content-200;
+}
+
+.leaflet-container a.leaflet-popup-close-button:hover,
+.leaflet-container a.leaflet-popup-close-button:focus {
+  @apply !text-content-100;
+}
+
+.leaflet-oldie .leaflet-control-zoom,
+.leaflet-oldie .leaflet-control-layers,
+.leaflet-oldie .leaflet-popup-content-wrapper,
+.leaflet-oldie .leaflet-popup-tip {
+  @apply !border-base-100/80;
+}
+
+/* Tooltip */
+.leaflet-tooltip {
+  @apply !rounded-xl border-transparent !bg-base-100/80 !text-content-100 !shadow-none;
+}
+
+.leaflet-tooltip-top:before {
+  @apply !border-t-base-100/80;
+}
+
+.leaflet-tooltip-bottom:before {
+  @apply !border-b-base-100/80;
+}
+
+.leaflet-tooltip-left:before {
+  @apply !border-l-base-100/80;
+}
+
+.leaflet-tooltip-right:before {
+  @apply !border-r-base-100/80;
 }
 </style>

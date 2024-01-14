@@ -21,16 +21,31 @@ await loadGarrisonItems();
 
 <template>
   <div>
-    <div class="flex items-center gap-1.5">
-      <OIcon icon="member" size="lg" class="text-content-100" />
-      <span class="text-content-200">
-        {{ settlement!.troops }}
-      </span>
+    <div class="prose prose-invert">
+      <div>TODO: Settlement garrison</div>
+      <ul>
+        <li>Add/Remove troops - owner</li>
+        <li>Add troops - clan member</li>
+        <li>Troops limit?</li>
+
+        <!--  -->
+
+        <li>Add/Remove items</li>
+        <li>Add items - clan member</li>
+
+        <!--  -->
+
+        <li>Settlement gold?</li>
+      </ul>
     </div>
 
+    <br />
+    <br />
+    <br />
+
+    <!--  -->
     <div>
-      <h2>Garrison items: TODO: split screen with D&N?</h2>
-      <div class="grid grid-cols-4 gap-2">
+      <div class="grid grid-cols-5 gap-2">
         <div v-for="gi in garrisonItems">
           <ItemCard :item="gi.item" />
           Count:{{ gi.count }}
