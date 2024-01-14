@@ -164,14 +164,18 @@ const onMapReady = async (map: Map) => {
   mapBounds.value = map.getBounds();
   await Promise.all([loadSettlements(), partySpawn()]);
 
-  if (party.value !== null) {
-    map.flyTo(positionToLatLng(party.value.position.coordinates), 5, {
-      animate: false,
-    });
-  }
-
   applyMoveEvents();
   mapIsLoading.value = false;
+
+  if (party.value !== null) {
+    locateToSelfParty();
+  }
+};
+
+const locateToSelfParty = () => {
+  map.value!.leafletObject.flyTo(positionToLatLng(party.value!.position.coordinates), 5, {
+    animate: false,
+  });
 };
 </script>
 
@@ -244,7 +248,12 @@ const onMapReady = async (map: Map) => {
       <DialogRegistration v-if="!isRegistered" @registered="onRegistered" />
     </div>
 
-    <PartyProfile v-if="party" class="absolute right-10 top-12 z-[1000]" :party="party" />
+    <PartyProfile
+      v-if="party"
+      class="absolute right-10 top-12 z-[1000]"
+      :party="party"
+      @locate="locateToSelfParty"
+    />
 
     <RouterView v-slot="{ Component }" class="absolute left-16 top-6 z-[1000]">
       <Suspense>

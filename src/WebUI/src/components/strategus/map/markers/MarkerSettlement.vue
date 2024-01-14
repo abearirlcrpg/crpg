@@ -24,9 +24,12 @@ const settlementMarkerStyle = computed(() => {
       output.baseClass = clsx('text-2xs px-1 py-1 gap-1');
   }
 
-  if (settlement.owner !== null && settlement.owner.clan !== null) {
-    output.baseStyle = `background-color: ${hexToRGBA(settlement.owner.clan.primaryColor, 0.3)};`; // TODO: clan tag, clan banner, tweak
-  }
+  // if (settlement?.owner?.clan) {
+  //   output.baseStyle = `background-color: ${hexToRGBA(
+  //     settlement.owner?.clan?.clan?.primaryColor,
+  //     0.3
+  //   )};`;
+  // }
 
   return output;
 });
@@ -48,8 +51,8 @@ const settlementMarkerStyle = computed(() => {
         <div class="leading-snug">{{ settlement.name }}</div>
 
         <div v-if="settlement?.owner?.clan" class="flex items-center">
-          <ClanTagIcon :color="settlement.owner.clan.primaryColor" size="xl" />
-          [{{ settlement.owner.clan.tag }}]
+          <!-- <ClanTagIcon :color="settlement.owner.clan.clan.primaryColor" size="xl" /> -->
+          [{{ settlement.owner.clan.clan.tag }}]
         </div>
       </div>
     </LIcon>

@@ -18,7 +18,7 @@ public record SettlementPublicViewModel : IMapFrom<Settlement>
     public Culture Culture { get; init; }
     public Region Region { get; init; }
     public int Troops { get; init; }
-    public UserPublicViewModel? Owner { get; init; } // recursion TODO: clan color
+    public UserPublicViewModel? Owner { get; init; }
     public void Mapping(Profile profile)
     {
         profile.CreateMap<Settlement, SettlementPublicViewModel>()

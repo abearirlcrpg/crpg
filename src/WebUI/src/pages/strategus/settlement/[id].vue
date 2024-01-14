@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getSettlement } from '@/services/strategus-service/settlement';
 import { settlementKey } from '@/symbols/strategus/settlement';
+import { useUserStore } from '@/stores/user';
 
 definePage({
   meta: {
@@ -10,6 +11,8 @@ definePage({
     fullPage: true,
   },
 });
+
+const { user } = toRefs(useUserStore());
 
 const route = useRoute<'StrategusSettlementId'>();
 
@@ -65,7 +68,13 @@ await loadSettlement();
 
           <div v-if="settlement?.owner" class="flex flex-col gap-1">
             <span class="text-3xs text-content-300">Owner</span>
-            <UserMedia :user="settlement.owner" class="max-w-[12rem]" />
+            <UserMedia
+              :user="settlement.owner"
+              :clan="settlement.owner.clan?.clan"
+              :clanRole="settlement.owner.clan?.role"
+              :isSelf="settlement.owner.id === user!.id"
+              class="max-w-[16rem]"
+            />
           </div>
         </div>
       </div>

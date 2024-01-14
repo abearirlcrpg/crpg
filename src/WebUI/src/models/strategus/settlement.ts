@@ -13,7 +13,7 @@ export interface SettlementPublic {
   id: number;
   name: string;
   type: SettlementType;
-  culture: Culture; // ?
+  culture: Culture;
   position: Point;
   scene: string;
   region: string;
