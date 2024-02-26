@@ -71,6 +71,7 @@ nav:
     Characters: 角色
     Shop: 商店
     Clans: 氏族
+    Captain: 队长
     Moderator: 管理员
     Builder: 生成器
     Leaderboard: 排行榜
@@ -1316,6 +1317,19 @@ item:
 
   filter:
     all: 一应俱全
+
+captain:
+  title: 船长编队
+  formation:
+    title: 编队 {id}
+    update:
+      notify:
+        success: 编队更新成功
+    character:
+      title: 选定的部队
+      remove: 从编队中移除
+    weight:
+      title: 编队重量
 
 leaderboard:
   title: 排行榜

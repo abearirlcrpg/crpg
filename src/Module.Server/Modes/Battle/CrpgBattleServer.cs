@@ -124,8 +124,14 @@ internal class CrpgBattleServer : MissionMultiplayerGameModeBase
         base.OnMissionTick(dt);
         if (MissionLobbyComponent.CurrentMultiplayerState != MissionLobbyComponent.MultiplayerGameState.Playing
             || !RoundController.IsRoundInProgress
-            || !CanGameModeSystemsTickThisFrame
-            || _flagSystem.HasNoFlags()) // Protection against scene with no flags.
+            || !CanGameModeSystemsTickThisFrame)
+        {
+            return;
+        }
+
+        CheckForPlayersSpawningAsBots();
+
+        if (_flagSystem.HasNoFlags()) // Protection against scene with no flags.
         {
             return;
         }

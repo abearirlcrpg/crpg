@@ -69,6 +69,7 @@ nav:
     Characters: Персонаж
     Shop: Магазин
     Clans: Кланы
+    Captain: капитан
     Moderator: Модератор
     Builder: Калькулятор
     Leaderboard: Лидеры
@@ -1325,6 +1326,19 @@ item:
 
   filter:
     all: Все
+
+captain:
+  title: Формации Капитана
+  formation:
+    title: Формация {id}
+    update:
+      notify:
+        success: Формации успешно обновлены
+    character:
+      title: Выбранный Отряд
+      remove: Удалить из Формации
+    weight:
+      title: Вес Формации
 
 leaderboard:
   title: Таблица лидеров
