@@ -11,6 +11,7 @@ public enum ErrorCode
     BattleNotFound,
     BattleTooFar,
     CaptainFormationNotFound,
+    CaptainFormationWeightNotInBounds,
     CaptainNotFound,
     CharacterForTournament,
     CharacterForTournamentNotFound,

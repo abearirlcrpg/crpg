@@ -43,6 +43,12 @@ internal static class CommonErrors
         Detail = $"Formation with id '{captainFormationId}' for user with id '{userId}' was not found",
     };
 
+    public static Error CaptainFormationWeightNotInBounds(int captainFormationId, int userId, int weight) => new(ErrorType.NotFound, ErrorCode.CaptainFormationWeightNotInBounds)
+    {
+        Title = "Weight was invalid",
+        Detail = $"Formation with id '{captainFormationId}' for user with id '{userId}' with weight '{weight}' was outside of bounds.",
+    };
+
     public static Error CaptainNotFound(int userId) => new(ErrorType.NotFound, ErrorCode.CaptainNotFound)
     {
         Title = "Captain was not found",

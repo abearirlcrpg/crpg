@@ -26,6 +26,11 @@ public record UpdateFormationWeightCommand : IMediatorRequest<CaptainFormationVi
 
         public async Task<Result<CaptainFormationViewModel>> Handle(UpdateFormationWeightCommand req, CancellationToken cancellationToken)
         {
+            if (req.Weight < -1 || req.Weight > 100)
+            {
+                return new(CommonErrors.CaptainFormationWeightNotInBounds(req.Number, req.UserId, req.Weight));
+            }
+
             var captain = await _db.Captains
                 .Where(c => c.UserId == req.UserId)
                 .Select(c => new

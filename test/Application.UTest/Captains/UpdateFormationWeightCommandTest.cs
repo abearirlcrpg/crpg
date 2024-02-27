@@ -45,4 +45,27 @@ public class UpdateFormationWeightCommandTest : TestBase
         Assert.That(result.Errors!, Is.Not.Empty);
     }
 
+    [Test]
+    public async Task ShouldReturnErrorIfWeightNotInBounds()
+    {
+        Captain captain = new()
+        {
+            UserId = 1,
+            Formations = new List<CaptainFormation>() { new() { Number = 1, Weight = 33 } },
+        };
+
+        ArrangeDb.Captains.Add(captain);
+        await ArrangeDb.SaveChangesAsync();
+
+        var result = await new UpdateFormationWeightCommand.Handler(ActDb, Mapper).Handle(new UpdateFormationWeightCommand
+        {
+            UserId = captain.UserId,
+            Weight = 101,
+            Number = 1,
+        }, CancellationToken.None);
+
+        Assert.That(result.Data, Is.Null);
+        Assert.That(result.Errors!, Is.Not.Empty);
+    }
+
 }
