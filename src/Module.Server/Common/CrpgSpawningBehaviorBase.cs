@@ -338,7 +338,7 @@ internal abstract class CrpgSpawningBehaviorBase : SpawningBehaviorBase
                 var formation = GetFormationFromPeer(peer, formationId);
 
                 var formationCharacter = formation?.Character ?? crpgPeer.User.Character;
-                var characterEquipment = CrpgCharacterBuilder.CreateCharacterEquipment(formationCharacter.EquippedItems);
+                var characterEquipment = CrpgCharacterBuilder.CreateBotCharacterEquipment(formationCharacter.EquippedItems);
                 var peerClass = MBObjectManager.Instance.GetObject<MultiplayerClassDivisions.MPHeroClass>($"crpg_class_division_1");
                 var characterSkills = CrpgCharacterBuilder.CreateCharacterSkills(formationCharacter.Characteristics);
                 var characterXml = peerClass.HeroCharacter;
