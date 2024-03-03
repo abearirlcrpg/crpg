@@ -6,7 +6,8 @@ import {
 import { library, type IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import {
   // ConfigPlugin, // TODO: create PR https://github.com/oruga-ui/oruga/blob/9693d7c63246eb0d6fab791f272b6d9574dab253/packages/oruga/src/utils/config.ts#L38
-  ConfigProgrammatic,
+  // ConfigProgrammatic,
+  Oruga,
   OButton,
   OField,
   OCheckbox,
@@ -38,79 +39,51 @@ export const install: BootModule = app => {
     library.add(ic);
   });
 
-  const config = ConfigProgrammatic.getOptions();
-  ConfigProgrammatic.setOptions({
-    ...config,
-    // https://oruga.io/components/Icon.html
-    iconComponent: 'FontAwesomeIcon',
-    iconPack: 'crpg',
-    customIconPacks: {
-      crpg: {
-        sizes: {
-          default: 'sm',
-          '2xs': '2xs',
-          xs: 'xs',
-          sm: 'sm',
-          lg: 'lg',
-          xl: 'xl',
-          '2xl': '2xl',
-          '3x': '3x',
-          '4x': '4x',
-          '5x': '5x',
-        },
-        iconPrefix: 'fa-',
-        internalIcons: {
-          'close-circle': 'close',
-        },
-      },
-    },
-    useHtml5Validation: false,
-  });
   app
-    .component('OIcon', OIcon)
-    .component('OButton', OButton)
-    .component('OField', OField)
-    .component('OCheckbox', OCheckbox)
-    .component('ORadio', ORadio)
-    .component('OSwitch', OSwitch)
-    .component('OInput', OInput)
-    .component('OTable', OTable)
-    .component('OTableColumn', OTableColumn)
-    .component('OTabs', OTabs)
-    .component('OTabItem', OTabItem)
-    .component('OLoading', OLoading)
-    .component('OPagination', OPagination)
+    // .component('OIcon', OIcon)
+    // .component('OButton', OButton)
+    // .component('OField', OField)
+    // .component('OCheckbox', OCheckbox)
+    // .component('ORadio', ORadio)
+    // .component('OSwitch', OSwitch)
+    // .component('OInput', OInput)
+    // .component('OTable', OTable)
+    // .component('OTableColumn', OTableColumn)
+    // .component('OTabs', OTabs)
+    // .component('OTabItem', OTabItem)
+    // .component('OLoading', OLoading)
+    // .component('OPagination', OPagination)
+    // .component('ONotification', ONotification)
+    // .component('OCollapse', OCollapse)
+    // .component('ODateTimePicker', ODatetimepicker)
     .component('FontAwesomeIcon', FontAwesomeIcon)
     .component('FontAwesomeLayers', FontAwesomeLayers)
     .component('FontAwesomeLayersText', FontAwesomeLayersText)
-    .component('ONotification', ONotification)
-    .component('OCollapse', OCollapse)
-    .component('ODateTimePicker', ODatetimepicker)
-    .component('VueSlider', VueSlider);
-  // .use(ConfigPlugin, {
-  //   // https://oruga.io/components/Icon.html
-  //   iconComponent: 'FontAwesomeIcon',
-  //   iconPack: 'crpg',
-  //   customIconPacks: {
-  //     crpg: {
-  //       sizes: {
-  //         default: 'sm',
-  //         '2xs': '2xs',
-  //         xs: 'xs',
-  //         sm: 'sm',
-  //         lg: 'lg',
-  //         xl: 'xl',
-  //         '2xl': '2xl',
-  //         '3x': '3x',
-  //         '4x': '4x',
-  //         '5x': '5x',
-  //       },
-  //       iconPrefix: 'fa-',
-  //       internalIcons: {
-  //         'close-circle': 'close',
-  //       },
-  //     },
-  //   },
-  //   useHtml5Validation: false,
-  // });
+    .component('VueSlider', VueSlider)
+    .use(Oruga, {
+      // https://oruga.io/components/Icon.html
+      iconComponent: 'FontAwesomeIcon',
+      iconPack: 'crpg',
+      customIconPacks: {
+        crpg: {
+          sizes: {
+            default: 'sm',
+            '2xs': '2xs',
+            xs: 'xs',
+            sm: 'sm',
+            lg: 'lg',
+            xl: 'xl',
+            '2xl': '2xl',
+            '3x': '3x',
+            '4x': '4x',
+            '5x': '5x',
+          },
+          iconPrefix: 'fa-',
+          internalIcons: {
+            'close-circle': 'close',
+          },
+        },
+      },
+      useHtml5Validation: false,
+    });
 };
