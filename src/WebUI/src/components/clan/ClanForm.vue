@@ -114,7 +114,7 @@ const onSubmit = async () => {
             <OInput
               v-model="clanFormModel.name"
               type="text"
-              hasCounter
+              counter
               size="sm"
               expanded
               :placeholder="$t('clan.update.form.field.name')"
@@ -138,7 +138,7 @@ const onSubmit = async () => {
             <OInput
               v-model="clanFormModel.tag"
               type="text"
-              hasCounter
+              counter
               size="sm"
               expanded
               :placeholder="$t('clan.update.form.field.tag')"
@@ -167,7 +167,7 @@ const onSubmit = async () => {
               )})`"
               type="textarea"
               rows="5"
-              hasCounter
+              counter
               size="sm"
               expanded
               :maxlength="clanDescriptionMaxLength"
@@ -244,7 +244,7 @@ const onSubmit = async () => {
 
           <OInput
             v-model="clanFormModel.bannerKey"
-            hasCounter
+            counter
             expanded
             size="sm"
             :maxlength="clanBannerKeyMaxLength"

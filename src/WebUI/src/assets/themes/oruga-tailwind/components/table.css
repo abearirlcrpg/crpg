@@ -142,7 +142,8 @@
   @apply hidden;
 }
 
-.o-table__wrapper--sticky-header thead {
+/* TODO: */
+/* .o-table__wrapper--sticky-header thead {
   @apply sticky left-0 top-0 z-50 bg-base-100;
 }
 
@@ -152,7 +153,7 @@
 
 .o-table__wrapper--sticky-header tfoot {
   @apply sticky bottom-0 left-0 bg-base-100;
-}
+} */
 
 .o-table__detail {
   @apply bg-base-200;

@@ -5,7 +5,8 @@ import {
 } from '@fortawesome/vue-fontawesome';
 import { library, type IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import {
-  Oruga,
+  // ConfigPlugin, // TODO: create PR https://github.com/oruga-ui/oruga/blob/9693d7c63246eb0d6fab791f272b6d9574dab253/packages/oruga/src/utils/config.ts#L38
+  ConfigProgrammatic,
   OButton,
   OField,
   OCheckbox,
@@ -19,7 +20,6 @@ import {
   OTabItem,
   OIcon,
   OPagination,
-  // OPaginationButton,
   ONotification,
   OCollapse,
   ODatetimepicker,
@@ -38,6 +38,34 @@ export const install: BootModule = app => {
     library.add(ic);
   });
 
+  const config = ConfigProgrammatic.getOptions();
+  ConfigProgrammatic.setOptions({
+    ...config,
+    // https://oruga.io/components/Icon.html
+    iconComponent: 'FontAwesomeIcon',
+    iconPack: 'crpg',
+    customIconPacks: {
+      crpg: {
+        sizes: {
+          default: 'sm',
+          '2xs': '2xs',
+          xs: 'xs',
+          sm: 'sm',
+          lg: 'lg',
+          xl: 'xl',
+          '2xl': '2xl',
+          '3x': '3x',
+          '4x': '4x',
+          '5x': '5x',
+        },
+        iconPrefix: 'fa-',
+        internalIcons: {
+          'close-circle': 'close',
+        },
+      },
+    },
+    useHtml5Validation: false,
+  });
   app
     .component('OIcon', OIcon)
     .component('OButton', OButton)
@@ -52,38 +80,37 @@ export const install: BootModule = app => {
     .component('OTabItem', OTabItem)
     .component('OLoading', OLoading)
     .component('OPagination', OPagination)
-    // .component('OPaginationButton', OPaginationButton)
     .component('FontAwesomeIcon', FontAwesomeIcon)
     .component('FontAwesomeLayers', FontAwesomeLayers)
     .component('FontAwesomeLayersText', FontAwesomeLayersText)
     .component('ONotification', ONotification)
     .component('OCollapse', OCollapse)
     .component('ODateTimePicker', ODatetimepicker)
-    .component('VueSlider', VueSlider)
-    .use(Oruga, {
-      // https://oruga.io/components/Icon.html
-      iconComponent: 'FontAwesomeIcon',
-      iconPack: 'crpg',
-      customIconPacks: {
-        crpg: {
-          sizes: {
-            default: 'sm',
-            '2xs': '2xs',
-            xs: 'xs',
-            sm: 'sm',
-            lg: 'lg',
-            xl: 'xl',
-            '2xl': '2xl',
-            '3x': '3x',
-            '4x': '4x',
-            '5x': '5x',
-          },
-          iconPrefix: 'fa-',
-          internalIcons: {
-            'close-circle': 'close',
-          },
-        },
-      },
-      useHtml5Validation: false,
-    });
+    .component('VueSlider', VueSlider);
+  // .use(ConfigPlugin, {
+  //   // https://oruga.io/components/Icon.html
+  //   iconComponent: 'FontAwesomeIcon',
+  //   iconPack: 'crpg',
+  //   customIconPacks: {
+  //     crpg: {
+  //       sizes: {
+  //         default: 'sm',
+  //         '2xs': '2xs',
+  //         xs: 'xs',
+  //         sm: 'sm',
+  //         lg: 'lg',
+  //         xl: 'xl',
+  //         '2xl': '2xl',
+  //         '3x': '3x',
+  //         '4x': '4x',
+  //         '5x': '5x',
+  //       },
+  //       iconPrefix: 'fa-',
+  //       internalIcons: {
+  //         'close-circle': 'close',
+  //       },
+  //     },
+  //   },
+  //   useHtml5Validation: false,
+  // });
 };
