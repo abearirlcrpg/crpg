@@ -251,7 +251,7 @@ internal abstract class CrpgSpawningBehaviorBase : SpawningBehaviorBase
                 {
                     for (int i = 0; i < peerNumberOfBots; i++)
                     {
-                        SpawnBotAgent(peerClass.StringId, agent.Team, missionPeer);
+                        SpawnBotAgent(peerClass.StringId, agent.Team, missionPeer, p);
                     }
                 }
 
@@ -259,11 +259,12 @@ internal abstract class CrpgSpawningBehaviorBase : SpawningBehaviorBase
                 {
                     for (int i = 0; i < (int)(captainFormation.Value * peerNumberOfBots); i++)
                     {
-                        SpawnBotAgent(peerClass.StringId, agent.Team, missionPeer, captainFormation.Key);
+                        SpawnBotAgent(peerClass.StringId, agent.Team, missionPeer, p, captainFormation.Key);
                     }
                 }
             }
 
+            p++;
             // AgentVisualSpawnComponent.RemoveAgentVisuals(missionPeer, sync: true);
         }
     }
@@ -299,7 +300,7 @@ internal abstract class CrpgSpawningBehaviorBase : SpawningBehaviorBase
         return characterObject;
     }
 
-    protected Agent SpawnBotAgent(string classDivisionId, Team team, MissionPeer? peer = null, int formationId = 0)
+    protected Agent SpawnBotAgent(string classDivisionId, Team team, MissionPeer? peer = null, int peerId = 0, int formationId = 0)
     {
         var teamCulture = team.Side == BattleSideEnum.Attacker
             ? MBObjectManager.Instance.GetObject<BasicCultureObject>(MultiplayerOptions.OptionType.CultureTeam1.GetStrValue())
@@ -328,18 +329,36 @@ internal abstract class CrpgSpawningBehaviorBase : SpawningBehaviorBase
             .ClothingColor2(team.Side == BattleSideEnum.Attacker
                 ? teamCulture.Color2
                 : teamCulture.ClothAlternativeColor2);
+
         if (peer != null)
         {
-            agentBuildData.OwningMissionPeer(peer);
-            agentBuildData.Formation(peer.ControlledFormation);
             var crpgPeer = peer.GetComponent<CrpgPeer>();
             if (crpgPeer != null && crpgPeer?.User != null)
             {
                 var formation = GetFormationFromPeer(peer, formationId);
 
                 var formationCharacter = formation?.Character ?? crpgPeer.User.Character;
+                string characterClass = $"crpg_class_division_{peerId}_{formation?.Number}" ?? $"crpg_class_division_{peerId}";
+                botClass = MultiplayerClassDivisions
+                    .GetMPHeroClasses()
+                    .First(h => h.StringId == characterClass);
+                character = botClass.HeroCharacter;
+                agentBuildData = new AgentBuildData(character)
+                    .Equipment(character.AllEquipments[MBRandom.RandomInt(character.AllEquipments.Count)])
+                    .TroopOrigin(new BasicBattleAgentOrigin(character))
+                    .EquipmentSeed(MissionLobbyComponent.GetRandomFaceSeedForCharacter(character))
+                    .Team(team)
+                    .VisualsIndex(0)
+                    .InitialPosition(in spawnFrame.origin)
+                    .InitialDirection(in initialDirection)
+                    .IsFemale(character.IsFemale)
+                    .ClothingColor1(
+                        team.Side == BattleSideEnum.Attacker ? teamCulture.Color : teamCulture.ClothAlternativeColor)
+                    .ClothingColor2(team.Side == BattleSideEnum.Attacker
+                        ? teamCulture.Color2
+                        : teamCulture.ClothAlternativeColor2);
                 var characterEquipment = CrpgCharacterBuilder.CreateBotCharacterEquipment(formationCharacter.EquippedItems);
-                var peerClass = MBObjectManager.Instance.GetObject<MultiplayerClassDivisions.MPHeroClass>($"crpg_class_division_1");
+                var peerClass = MBObjectManager.Instance.GetObject<MultiplayerClassDivisions.MPHeroClass>(characterClass);
                 var characterSkills = CrpgCharacterBuilder.CreateCharacterSkills(formationCharacter.Characteristics);
                 var characterXml = peerClass.HeroCharacter;
                 var troopOrigin = new CrpgBattleAgentOrigin(characterXml, characterSkills);
