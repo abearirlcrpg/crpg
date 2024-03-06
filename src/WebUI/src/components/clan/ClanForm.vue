@@ -100,13 +100,13 @@ const onSubmit = async () => {
 <template>
   <form @submit.prevent="onSubmit" data-aq-clan-form>
     <div class="mb-8 space-y-4">
-      <FormGroup icon="hash" :label="$t('clan.update.form.field.mainInfo')">
+      <!-- <FormGroup icon="hash" :label="$t('clan.update.form.field.mainInfo')">
         <div class="grid grid-cols-2 gap-4">
           <OField
             v-bind="{
               ...($v.name.$error && {
                 variant: 'danger',
-                message: $v.name.$errors[0].$message,
+                message: $v.name.$errors[0].$message as string,
               }),
             }"
             data-aq-clan-form-field="name"
@@ -130,7 +130,7 @@ const onSubmit = async () => {
             v-bind="{
               ...($v.tag.$error && {
                 variant: 'danger',
-                message: $v.tag.$errors[0].$message,
+                message: $v.tag.$errors[0].$message as string,
               }),
             }"
             data-aq-clan-form-field="tag"
@@ -155,7 +155,7 @@ const onSubmit = async () => {
             v-bind="{
               ...($v.description.$error && {
                 variant: 'danger',
-                message: $v.description.$errors[0].$message,
+                message: $v.description.$errors[0].$message as string,
               }),
             }"
             data-aq-clan-form-field="description"
@@ -188,23 +188,25 @@ const onSubmit = async () => {
         >
           {{ $t(`region.${region}`, 0) }}
         </ORadio>
-      </FormGroup>
+      </FormGroup> -->
 
       <FormGroup>
         <template #label>
           <ClanTagIcon :color="clanFormModel.primaryColor" size="lg" />
           {{ $t('clan.update.form.field.colors') }}
         </template>
+
         <div class="grid grid-cols-2 gap-4">
           <OField :label="`${$t('clan.update.form.field.primaryColor')}:`" horizontal>
-            <div class="text-content-100">{{ clanFormModel.primaryColor }}</div>
-            <OInput
-              type="color"
-              v-model="clanFormModel.primaryColor"
-              data-aq-clan-form-input="primaryColor"
-            />
+            <div></div>
+            <!-- <div class="text-content-100">{{ clanFormModel.primaryColor }}</div>
+              <OInput
+                type="color"
+                v-model="clanFormModel.primaryColor"
+                data-aq-clan-form-input="primaryColor"
+              /> -->
           </OField>
-
+          <!--
           <OField :label="`${$t('clan.update.form.field.secondaryColor')}:`" horizontal>
             <div class="text-content-100">{{ clanFormModel.secondaryColor }}</div>
             <OInput
@@ -212,11 +214,11 @@ const onSubmit = async () => {
               v-model="clanFormModel.secondaryColor"
               data-aq-clan-form-input="secondaryColor"
             />
-          </OField>
+          </OField> -->
         </div>
       </FormGroup>
 
-      <FormGroup icon="banner" :label="$t('clan.update.form.field.bannerKey')">
+      <!-- <FormGroup icon="banner" :label="$t('clan.update.form.field.bannerKey')">
         <OField
           v-bind="{
             ...($v.bannerKey.$error && {
@@ -253,14 +255,14 @@ const onSubmit = async () => {
             @focus="$v.bannerKey.$reset"
           />
         </OField>
-      </FormGroup>
+      </FormGroup> -->
 
-      <FormGroup icon="discord" :label="$t('clan.update.form.field.discord')">
+      <!-- <FormGroup icon="discord" :label="$t('clan.update.form.field.discord')">
         <OField
           v-bind="{
             ...($v.discord.$error && {
               variant: 'danger',
-              message: $v.discord.$errors[0].$message,
+              message: $v.discord.$errors[0].$message as string,
             }),
           }"
           data-aq-clan-form-field="discord"
@@ -276,26 +278,25 @@ const onSubmit = async () => {
             @focus="$v.discord.$reset"
           />
         </OField>
-      </FormGroup>
+      </FormGroup> -->
 
-      <FormGroup icon="armory" :label="$t('clan.update.form.group.armory.label')">
+      <!-- <FormGroup icon="armory" :label="$t('clan.update.form.group.armory.label')">
         <div class="grid grid-cols-2 gap-4">
           <OField
             data-aq-clan-form-field="armoryTimeout"
             :label="$t('clan.update.form.group.armory.field.armoryTimeout.label')"
-            :message="$t('clan.update.form.group.armory.field.armoryTimeout.hint')"
             v-bind="{
-              ...($v.armoryTimeout.$error && {
-                variant: 'danger',
-                message: $v.armoryTimeout.$errors[0].$message,
-              }),
+              ...($v.armoryTimeout.$error
+                ? {
+                    variant: 'danger',
+                    message: $v.armoryTimeout.$errors[0].$message as string,
+                  }
+                : { message: $t('clan.update.form.group.armory.field.armoryTimeout.hint') }),
             }"
           >
             <OInput
               :modelValue="parseTimestamp(clanFormModel.armoryTimeout).days"
-              @update:modelValue="
-                (days: string) => (clanFormModel.armoryTimeout = daysToMs(Number(days)))
-              "
+              @update:modelValue="days => (clanFormModel.armoryTimeout = daysToMs(Number(days)))"
               type="number"
               size="sm"
               expanded
@@ -305,7 +306,7 @@ const onSubmit = async () => {
             />
           </OField>
         </div>
-      </FormGroup>
+      </FormGroup> -->
     </div>
 
     <div class="flex items-center justify-center gap-4">
