@@ -290,7 +290,7 @@ internal class CrpgAgentStatCalculateModel : AgentStatCalculateModel
         int strengthSkill = Math.Max(GetEffectiveSkill(agent, CrpgSkills.Strength), 3);
         int athleticsSkill = GetEffectiveSkill(agent, DefaultSkills.Athletics);
         const float awfulScaler = 3231477.548f;
-        float[] weightReductionPolynomialFactor = { 30f / awfulScaler, 0.00005f / awfulScaler, 0.5f / awfulScaler, 1000000f / awfulScaler, 0f }; 
+        float[] weightReductionPolynomialFactor = { 30f / awfulScaler, 0.00005f / awfulScaler, 0.5f / awfulScaler, 1000000f / awfulScaler, 0f };
         float weightReductionFactor = 1f / (1f + MathHelper.ApplyPolynomialFunction(strengthSkill - 3, weightReductionPolynomialFactor));   //these just output 1?
         float totalEncumbrance = props.ArmorEncumbrance + props.WeaponsEncumbrance; 
         float freeWeight = 0.0f; //2.5f * (1 + (strengthSkill - 3f) / 30f);
